@@ -6,7 +6,7 @@ A standalone Windows overlay for tracking active effects in Neverwinter Nights: 
 
 [**Download the Windows installer package**](https://github.com/Antras89/NWN-Client-HUD/raw/refs/heads/add-hud-installer/NWN-HUD-Defensive-installer.zip)
 
-Extract the ZIP and run `install.ps1` in Windows PowerShell. The installer installs the HUD under `%LOCALAPPDATA%\Programs\NWN Client HUD`. Updates preserve `settings.json` and `learned.json`, create a timestamped backup, and restart the HUD.
+Extract the ZIP and run `install.ps1` in Windows PowerShell. The installer installs the HUD under `%LOCALAPPDATA%\Programs\NWN Client HUD` and creates a **NWN Client HUD** desktop shortcut using the included SWLOR Toolset icon. Updates preserve `settings.json` and `learned.json`, create a timestamped backup, refresh the shortcut, and restart the HUD.
 
 ## Features
 
@@ -25,4 +25,4 @@ Extract the ZIP and run `install.ps1` in Windows PowerShell. The installer insta
 
 ## Project contents
 
-The installer package contains `NWN.ClientHUD.exe`, runtime files, `icons/`, `icons.json`, `buff-durations.json`, `install.ps1`, source code, and English installation instructions.
+The installer package contains `NWN.ClientHUD.exe`, runtime files, `icons/`, `icons.json`, `buff-durations.json`, `hud-icon.ico`, `install.ps1`, source code, and English installation instructions.
