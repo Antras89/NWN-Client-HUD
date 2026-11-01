@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NWNClientHUDInstaller</AssemblyName>
+    <RootNamespace>NWNClientHUDInstaller</RootNamespace>
+    <DefineConstants Condition="'$(InstallerMode)' == 'Update'">$(DefineConstants);UPDATE_MODE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(InstallerMode)' == 'Setup'">
+    <EmbeddedResource Include="$(PackagePath)" LogicalName="payload.zip" />
+  </ItemGroup>
+</Project>
