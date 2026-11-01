@@ -1,0 +1,51 @@
+name: Build Windows installers
+
+on:
+  pull_request:
+    branches: [add-hud-installer]
+  push:
+    branches: [add-hud-installer]
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build Setup.exe
+        shell: pwsh
+        run: >-
+          dotnet publish installer/Installer.csproj --configuration Release --runtime win-x64 --self-contained true
+          -p:InstallerMode=Setup
+          -p:PackagePath="${{ github.workspace }}\\NWN-HUD-Defensive-installer.zip"
+          -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true
+          --output dist/setup
+      - name: Build Update.exe
+        shell: pwsh
+        run: >-
+          dotnet publish installer/Installer.csproj --configuration Release --runtime win-x64 --self-contained true
+          -p:InstallerMode=Update
+          -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true
+          --output dist/update
+      - name: Name installer executables
+        shell: pwsh
+        run: |
+          Copy-Item dist/setup/NWNClientHUDInstaller.exe dist/Setup.exe
+          Copy-Item dist/update/NWNClientHUDInstaller.exe dist/Update.exe
+      - name: Publish latest release assets
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest' }}
+          name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'Latest NWN Client HUD' }}
+          make_latest: true
+          files: |
+            dist/Setup.exe
+            dist/Update.exe
+            NWN-HUD-Defensive-installer.zip
